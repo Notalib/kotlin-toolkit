@@ -341,7 +341,8 @@ class EpubNavigatorFragment private constructor(
             }
         }
 
-        resourcePager.adapter = adapter
+        // In onPageSelected, scroll to start.
+        currentPagerPosition = -1
 
         if (publication.metadata.presentation.layout == EpubLayout.REFLOWABLE) {
             pendingLocator = locator
