@@ -54,6 +54,9 @@ tasks.withType<Test>().configureEach {
     failOnNoDiscoveredTests = false
 }
 
+val isJitPackNavigatorBuild =
+    System.getenv("JITPACK") == "true" && path == ":readium:readium-navigator"
+
 dependencies {
     //noinspection UseTomlInstead
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
@@ -61,9 +64,17 @@ dependencies {
 
 mavenPublishing {
     coordinates(
-        groupId = group.toString(),
+        groupId = if (isJitPackNavigatorBuild) {
+            "com.github.Notalib.kotlin-toolkit"
+        } else {
+            group.toString()
+        },
         artifactId = property("pom.artifactId") as String,
-        version = property("pom.version") as String
+        version = if (isJitPackNavigatorBuild) {
+            System.getenv("VERSION") ?: error("JitPack did not provide VERSION")
+        } else {
+            property("pom.version") as String
+        }
     )
 
     pom {
@@ -101,5 +112,7 @@ mavenPublishing {
     }
 
     publishToMavenCentral()
-    signAllPublications()
+    if (!isJitPackNavigatorBuild) {
+        signAllPublications()
+    }
 }

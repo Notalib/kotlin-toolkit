@@ -1,0 +1,8 @@
+jdk:
+  - openjdk17
+before_install:
+  - sdk install java 21-open
+  - sdk use java 21-open
+  - 'SDKMANAGER="$(command -v sdkmanager || find "$ANDROID_HOME" -type f -name sdkmanager -print -quit)" && test -n "$SDKMANAGER" && yes | "$SDKMANAGER" --licenses && yes | "$SDKMANAGER" "platforms;android-37"'
+install:
+  - ./gradlew :readium:readium-navigator:publishToMavenLocal
