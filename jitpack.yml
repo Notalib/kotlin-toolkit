@@ -1,8 +1,6 @@
 jdk:
   - openjdk17
 before_install:
-  - sdk install java 21-open
-  - sdk use java 21-open
-  - 'SDKMANAGER="$(command -v sdkmanager || find "$ANDROID_HOME" -type f -name sdkmanager -print -quit)" && test -n "$SDKMANAGER" && yes | "$SDKMANAGER" --licenses && yes | "$SDKMANAGER" "platforms;android-37"'
+  - sdk install java 21.0.12+1.1-tem && sdk use java 21.0.12+1.1-tem
 install:
-  - ./gradlew :readium:readium-navigator:publishToMavenLocal
+  - bash .jitpack/setup-android.sh && ./gradlew :readium:readium-navigator:publishToMavenLocal
