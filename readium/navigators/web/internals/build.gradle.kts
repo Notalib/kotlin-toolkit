@@ -30,4 +30,9 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.androidx.webkit)
     implementation(libs.jsoup)
+
+    // Tests
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.junit)
+    testImplementation(libs.robolectric)
 }

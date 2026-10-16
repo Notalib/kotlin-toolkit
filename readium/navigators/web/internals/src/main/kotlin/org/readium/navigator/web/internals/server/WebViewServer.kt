@@ -220,14 +220,6 @@ public class WebViewServer(
         }
     }
 
-    /**
-     * Allow the response to be consumed by publication documents served
-     * from any origin, including the package domain.
-     */
-    private fun WebResourceResponse.allowCors() {
-        responseHeaders = responseHeaders + mapOf("Access-Control-Allow-Origin" to "*")
-    }
-
     private fun errorResource(): Resource =
         StringResource {
             withContext(Dispatchers.IO) {
